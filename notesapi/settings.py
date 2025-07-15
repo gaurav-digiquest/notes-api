@@ -1,13 +1,11 @@
-
-
 from pathlib import Path
-
+from decouple import config, Csv  
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-eb@(q#y_w3(&&4$=tjc9sh7j1f$(dvk^(sxx8v_36ri8=(3%5%'
-DEBUG = True
-ALLOWED_HOSTS = []
+SECRET_KEY = config('SECRET_KEY') 
+DEBUG = config('DEBUG', cast=bool)  
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())  
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,10 +15,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',  
-    'notes',  
-    'task',  
-    'student',
+    'rest_framework',
+    'notes',
+    'task',
 ]
 
 MIDDLEWARE = [
@@ -52,27 +49,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'notesapi.wsgi.application'
 
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-'''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myprojectdb',        
-        'USER': 'myuser',             
-        'PASSWORD': 'Test@1234',      
-        'HOST': 'localhost',          
-        'PORT': '3306',               
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -89,14 +75,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
