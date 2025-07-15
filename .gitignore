@@ -4,5 +4,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.log
-student/
+task/
 
+
+.env
